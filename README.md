@@ -1,2 +1,2 @@
-# qa-kp03-khomenko
-QA practice repository
+# Quality Assurance  
+Lab repository of Khomenko Maksym ("КП-03"-student)  
