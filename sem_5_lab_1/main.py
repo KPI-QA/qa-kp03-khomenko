@@ -15,6 +15,14 @@ class Component:
     def read_file(self, name: str):
         raise NotImplementedError()
 
+    @property
+    def name(self):
+        return self.__name__
+
+    @property
+    def max_size(self):
+        return self.__max_size
+
 
 class BinaryFile(Component):
     pass
@@ -30,7 +38,8 @@ class BufferFile(Component):
 
 class Composite:
     def __init__(self):
-        self._components: List[Component] = []
+        self.__components: List[Component] = []
+        self.__outputIdent = 3
 
     def create(self):
         pass
@@ -41,4 +50,5 @@ class Composite:
     def move(self, source: Component, destination: Component):
         pass
 
-
+    def get_children(self):
+        return self.__components
