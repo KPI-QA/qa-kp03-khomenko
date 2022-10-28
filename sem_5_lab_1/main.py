@@ -36,15 +36,15 @@ class BufferFile(Component):
     pass
 
 
-class Composite:
+class Composite(Component):
     def __init__(self):
         self.__components: List[Component] = []
         self.__outputIdent = 3
 
-    def create(self):
+    def create(self, component: Component):
         pass
 
-    def remove(self):
+    def remove(self, component: Component):
         pass
 
     def move(self, source: Component, destination: Component):
