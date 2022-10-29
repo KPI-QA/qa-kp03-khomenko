@@ -1,7 +1,8 @@
 from main import *
+import pytest
 
 
-def directory_whenAddAnyComponent_endsUpHavingTheComponent():
+def test_directory_whenAddAnyComponent_endsUpHavingTheComponent():
     # arrange
     tree = Composite("root")
     dir1 = Composite("dir1")
@@ -27,7 +28,7 @@ def directory_whenAddAnyComponent_endsUpHavingTheComponent():
                 or c.name == bin_file.name]) == 3
 
 
-def componentToRemove_whenRemove_endsUpBeingInexisting():
+def test_componentToRemove_whenRemove_endsUpBeingInexisting():
     tree = Composite("root")
     dir1 = Composite("dir1")
     dir2 = Composite("dir2")
@@ -47,7 +48,7 @@ def componentToRemove_whenRemove_endsUpBeingInexisting():
         assert False
 
 
-def removedComponent_whenRead_endsUpInvalidOperationError():
+def test_removedComponent_whenRead_endsUpInvalidOperationError():
     tree = Composite("root")
     dir1 = Composite("dir1")
     dir2 = Composite("dir2")
@@ -59,7 +60,7 @@ def removedComponent_whenRead_endsUpInvalidOperationError():
     tree.read_file("file_to_delete.bin")
 
 
-def directory_whenMaxLimitIsReached_endsUpWithInvalidOperationError():
+def test_directory_whenMaxLimitIsReached_endsUpWithInvalidOperationError():
 
     # arrange
     dir1 = Composite("dir1")
@@ -80,7 +81,7 @@ def directory_whenMaxLimitIsReached_endsUpWithInvalidOperationError():
         assert True
 
 
-def binaryfile_whenMutableOperation_CausesError():
+def test_binaryfile_whenMutableOperation_CausesError():
 
     # arrange
     bin = BinaryFile("default.bin")
@@ -95,7 +96,7 @@ def binaryfile_whenMutableOperation_CausesError():
         assert True
 
 
-def logTextfile_whenRecordIsPushed_TheLineIsAppendedAtTheEnd():
+def test_logTextfile_whenRecordIsPushed_TheLineIsAppendedAtTheEnd():
 
     # arrange
     logfile = LogTextFile("log.txt")
@@ -109,7 +110,7 @@ def logTextfile_whenRecordIsPushed_TheLineIsAppendedAtTheEnd():
     assert logfile.content[lines_amount - 1] == str_to_push
 
 
-def bufferfile_whenRecordIsRead_TheFirstRecordIsPopped():
+def test_bufferfile_whenRecordIsRead_TheFirstRecordIsPopped():
     # arrange
     buffer_file = BufferFile("buffer")
     existing_record = buffer_file.content[0]
@@ -119,5 +120,3 @@ def bufferfile_whenRecordIsRead_TheFirstRecordIsPopped():
 
     # assert
     assert buffer_file.content[0] != existing_record
-
-def _whenElement
