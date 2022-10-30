@@ -44,7 +44,7 @@ class BinaryFile(Component):
         self.content = ['fake content', 'you can look', "but you can't touch"]
 
     def push_record(self, record: str):
-        raise Exception
+        raise InvalidOperation
 
 
 class LogTextFile(Component):
@@ -54,7 +54,10 @@ class LogTextFile(Component):
 
 class BufferFile(Component):
     def push_record(self, record: str):
-        self.content.append(record)
+        if len(self.content) + 1 <= self.max_size:
+            self.content.append(record)
+        else:
+            raise InvalidOperation
 
     def read_file(self):
         print(self.content.pop(0))
@@ -74,7 +77,10 @@ class Composite(Component):
         raise Exception
 
     def create(self, component: Component):
-        self.__components.append(component)
+        if len(self.__components) + 1 <= self.max_size:
+            self.__components.append(component)
+        else:
+            raise InvalidOperation
 
     def remove(self, component: Component):
         self.__components.remove(component)
@@ -90,21 +96,3 @@ class Composite(Component):
         print(f"{' ' * ident}{self.name}>")
         ident += 3
         [item.display(ident) for item in self.__components]
-
-
-defaultSize = 10
-
-tree = Composite("root", defaultSize)
-dir1 = Composite("dir1", defaultSize)
-dir2 = Composite("dir2", defaultSize)
-bin_file = BinaryFile("file1.bin", defaultSize)
-bin_file2 = BinaryFile("file11.bin", defaultSize)
-log_text_file = LogTextFile("file2.txt", defaultSize)
-buffer_file = BufferFile("file3.buff", defaultSize)
-
-tree.create(dir1)
-tree.create(dir2)
-dir1.create(bin_file)
-dir1.create(log_text_file)
-dir2.create(bin_file2)
-tree.create(buffer_file)
