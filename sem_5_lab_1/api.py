@@ -132,8 +132,12 @@ def patch_file(file_name):
     file_to_patch: Component = found_files[0]
 
     try:
-        file_to_patch.push_record( str(request.json.get('new_line_value')) )
+        file_to_patch.push_record(str(request.json.get('new_line_value')))
     except InvalidOperation:
         return '', http.HTTPStatus.BAD_REQUEST
 
     return '', http.HTTPStatus.NO_CONTENT
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
