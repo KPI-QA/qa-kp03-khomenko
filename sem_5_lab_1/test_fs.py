@@ -64,6 +64,19 @@ def test_directory_whenMaxLimitReached_endsUpWithError():
         assert True
 
 
+def test_directory_whenSourceIsMoveInto_endUpHavingSourceInto():
+    dir_default_size: int = 10
+    root = Composite("root", 2)
+    source = Composite("source", dir_default_size) # to lab fix branch
+    destination = Composite("destination", dir_default_size)
+    root.create(source)
+    root.create(destination)
+
+    Composite.move(source, destination, root)
+
+    assert len(list(filter(lambda c: c.name == source.name, destination.children))) == 1
+
+
 def test_componentToRemove_whenRemove_endsUpBeingInexisting():
     # arrange
     anySize = 10
