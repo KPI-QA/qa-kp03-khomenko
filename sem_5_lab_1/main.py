@@ -31,11 +31,22 @@ class Component:
         self.__content = content
 
     def display(self, ident: int):
-        print(' ' * ident, self.name, self.max_size)
+        fileExtension: str = ''
+        type_of_file = type(self)
+        if type_of_file == type(LogTextFile):
+            fileExtension += '.txt'
+        elif type_of_file == type(BinaryFile):
+            fileExtension += '.buff'
+        elif type_of_file == type(BufferFile):
+            fileExtension += '.bin'
+
+        return f"{' ' * ident}{self.name}{fileExtension} {self.max_size}\n"
 
     def read_file(self):
-        print(self.name)
-        [print(x) for x in self.content]
+        buff: str = f'{self.name}\n'
+        for x in self.content:
+            buff += f"{x}\n"
+        return buff
 
 
 class BinaryFile(Component):
@@ -60,11 +71,10 @@ class BufferFile(Component):
             raise InvalidOperation
 
     def read_file(self):
-        print(self.content.pop(0))
+        return f'{self.content.pop(0)}\n'
 
 
 class Composite(Component):
-
     def __init__(self, name: str, volume: int):
         super().__init__(name, volume)
         self.__components: [Component] = []
@@ -86,13 +96,16 @@ class Composite(Component):
         self.__components.remove(component)
 
     @staticmethod
-    def move(source: Component, destination: Component):
-        destination = source
+    def move(to_move_component: Component, destination_composite, root):
+        root.remove(to_move_component)
+        destination_composite.create(to_move_component)
 
     def read_file(self):
         raise Exception
 
     def display(self, ident: int):
-        print(f"{' ' * ident}{self.name}>")
+        buff: str = f"{' ' * ident}{self.name}>\n"
         ident += 3
-        [item.display(ident) for item in self.__components]
+        for c in self.__components:
+            buff += c.display(ident)
+        return buff
