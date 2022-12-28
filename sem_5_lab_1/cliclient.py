@@ -18,3 +18,6 @@ def remove():
 
 def writeto():
     pass
+
+def create_file():
+    pass
